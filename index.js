@@ -68,6 +68,7 @@ app.get('/showProduct/:mId', async(req, res) =>{
             res.status(404).send("Sorry this machine is not working.")
         }
         else{
+            // here we send all data
             res.send(showAllProduct)
         }
     }catch(e){
