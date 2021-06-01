@@ -21,7 +21,7 @@ app.post('/update/:mId', async(req, res)=>{
     const left = req.body;
     const check =await getDataOfSpecificMachine(req.params.mId).find();
     const filter = {_id : left["_id"]};
-    const change = {quantity:left["quantity"]};
+    const change = {quantity:left["quantity"], status:false};
     const update = await getDataOfSpecificMachine(req.params.mId).findOneAndUpdate(filter, change);
     return res.status(200).send(update);
 
