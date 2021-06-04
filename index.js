@@ -8,15 +8,13 @@ app.use(express.json());
 
 
 const schema = new mongoose.Schema({
-
-    product_id:Number,
     image:String, 
     quantity:Number,
     t_id: String,
     account_id:String,
     price:Number,
     status:Boolean,
- 
+	product_id : String, 
 });
 
 app.post('/update/:mId', async(req, res)=>{
