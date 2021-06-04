@@ -32,7 +32,7 @@ app.post('/update/:mId', async(req, res)=>{
 app.post('/final_recipt', async(req, res) =>{
 	try{
 
-		const recipt = new findData("final_recipt")({
+		const recipt = new getDataOfSpecificMachine("final_recipt")({
 			quantity : req.body.quantity,
 			product_id:req.body.product_id,
 			t_id:req.body.t_id,
@@ -42,6 +42,7 @@ app.post('/final_recipt', async(req, res) =>{
 		return res.status(201).send(createRecipt);
 
 	}catch(e){
+        console.log(e)
 		return res.status(400).send("Something went wrong")
 	};
 });
