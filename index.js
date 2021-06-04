@@ -14,7 +14,7 @@ const schema = new mongoose.Schema({
     account_id:String,
     price:Number,
     status:Boolean,
-	product_id : String, 
+	product_id : Number, 
 });
 
 app.post('/update/:mId', async(req, res)=>{
