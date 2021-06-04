@@ -12,6 +12,8 @@ const schema = new mongoose.Schema({
     product_id:Number,
     image:String, 
     quantity:Number,
+    t_id: String,
+    account_id:String,
     price:Number,
     status:Boolean,
  
@@ -27,6 +29,22 @@ app.post('/update/:mId', async(req, res)=>{
 
 });
 
+app.post('/final_recipt', async(req, res) =>{
+	try{
+
+		const recipt = new findData("final_recipt")({
+			quantity : req.body.quantity,
+			product_id:req.body.product_id,
+			t_id:req.body.t_id,
+			account_id:req.body.account_id,
+		})
+		const createRecipt = await recipt.save();
+		return res.status(201).send(createRecipt);
+
+	}catch(e){
+		return res.status(400).send("Something went wrong")
+	};
+});
 
 app.post('/fillProduct/:mId', async(req, res) => {
     try{
