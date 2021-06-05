@@ -41,8 +41,6 @@ app.post('/updateProduct', async(req, res)=>{
             return res.status(403).send("price is wrong");
         }else if(quantity1 == null){
             return res.status(404).send("quantity wrong");
-        }else if(data.machineId == null){
-            return res.status(406).send("machine id is wrong");
         }else{
             const filter = {_id: data._id};
             const change = {price: price1, quantity:quantity1}; // here we add logic for adding image
