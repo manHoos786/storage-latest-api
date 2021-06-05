@@ -21,7 +21,7 @@ app.post('/deleteProduct', async(req, res)=>{
     const data = req.body;
     const deleteProduct = await getDataOfSpecificMachine(req.body.machineId).findByIdAndDelete(data["_id"], (error)=>{
         if(error) throw error;
-        return res.status(200).send("deleteProduct");
+        return res.status(200).send("Product deleted successfully.");
     });
 });
 
