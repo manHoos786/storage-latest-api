@@ -31,17 +31,18 @@ app.post('/updateProduct', async(req, res)=>{
     const quantity1 = Number(data["quantity"])
     try{
         if(price1 == null){
-            return res.status(403).send("something went wrong");
+            return res.status(403).send("price is wrong");
         }else if(quantity1 == null){
-            return res.status(403).send("Something went wrong");
+            return res.status(403).send("quantity wrong");
         }else if(data["_id"] == null){
-            return res.status(403).send("Something went wrong");
+            return res.status(403).send("id is wrong");
         }else if(data["machineId"] == null){
-            return res.status(403).send("Something went wrong");
+            return res.status(403).send("machine id is wrong");
         }else{
             const filter = {_id: data["_id"]};
             const change = {price: price1, quantity:quantity1}; // here we add logic for adding image
             const update = await getDataOfSpecificMachine(req.body.machineId).findOneAndUpdate(filter, change);
+            console.log(update)
             return res.status(200).send({success:"yes"});
         };
     }catch(error){
