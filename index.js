@@ -17,6 +17,30 @@ const schema = new mongoose.Schema({
 	product_id : Number, 
 });
 
+app.post('/updateProduct', async(req, res)=>{
+    const data = req.body;
+    try{
+        if(data["price"] == null){
+            return res.status(403).send("something went wrong");
+        }else if(data["quantity"] == null){
+            return res.status(403).send("Something went wrong");
+        }else if(data["_id"] == null){
+            return res.status(403).send("Something went wrong");
+        }else if(data["machineId"] == null){
+            return res.status(403).send("Something went wrong");
+        }else if(data["status"] == null){
+            return res.status(403).send("Something went wrong");
+        }else{
+            const filter = {_id: data["_id"]};
+            const change = {price: data["price"], quantity:data["quantity"], status:data["status"]}; // here we add logic for adding image
+            const update = await getDataOfSpecificMachine(req.body.machineId).findOneAndUpdate(filter, change);
+            return res.status(200).send("Done");
+        };
+    }catch(error){
+        return res.status(400).send(error);
+    };
+});
+
 app.post('/update/:mId', async(req, res)=>{
     const left = req.body;
     const check =await getDataOfSpecificMachine(req.params.mId).find();
