@@ -17,6 +17,14 @@ const schema = new mongoose.Schema({
 	product_id : Number, 
 });
 
+app.post('/deleteProduct', async(req, res)=>{
+    const data = req.body;
+    const deleteProduct = await getDataOfSpecificMachine(req.body.machineId).findByIdAndDelete(data["_id"], (error)=>{
+        if(error) throw error;
+        return res.status(200).send("deleteProduct");
+    });
+});
+
 app.post('/updateProduct', async(req, res)=>{
     const data = req.body;
     try{
