@@ -27,11 +27,12 @@ app.post('/deleteProduct', async(req, res)=>{
 
 app.post('/updateProduct', async(req, res)=>{
     const data = req.body;
-    console.log(data)
+    const price1 = Number(data["price"])
+    const quantity1 = Number(data["quantity"])
     try{
-        if(data["price"] == null){
+        if(price1 == null){
             return res.status(403).send("something went wrong");
-        }else if(data["quantity"] == null){
+        }else if(quantity1 == null){
             return res.status(403).send("Something went wrong");
         }else if(data["_id"] == null){
             return res.status(403).send("Something went wrong");
@@ -39,7 +40,7 @@ app.post('/updateProduct', async(req, res)=>{
             return res.status(403).send("Something went wrong");
         }else{
             const filter = {_id: data["_id"]};
-            const change = {price: data["price"], quantity:data["quantity"]}; // here we add logic for adding image
+            const change = {price: price1, quantity:quantity1}; // here we add logic for adding image
             const update = await getDataOfSpecificMachine(req.body.machineId).findOneAndUpdate(filter, change);
             return res.status(200).send({success:"yes"});
         };
