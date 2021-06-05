@@ -30,6 +30,12 @@ app.post('/updateProduct', async(req, res)=>{
         const data = req.body;
         const price1 = Number(data.price);
         const quantity1 = Number(data.quantity);
+        const id = String(data._id);
+
+        console.log(price1)
+        console.log(quantity1)
+        console.log(data._id)
+        console.log(data.machineId)
 
         if(price1 == null){
             return res.status(403).send("price is wrong");
@@ -44,7 +50,7 @@ app.post('/updateProduct', async(req, res)=>{
             const change = {price: price1, quantity:quantity1}; // here we add logic for adding image
             const update = await getDataOfSpecificMachine(req.body.machineId).findOneAndUpdate(filter, change);
             console.log(update)
-            return res.status(200).send({success:"yes"});
+            return res.status(200).send("Successfully updated");
         };
     }catch(error){
         return res.status(400).send(error);
