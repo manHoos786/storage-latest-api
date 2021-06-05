@@ -21,12 +21,13 @@ app.post('/deleteProduct', async(req, res)=>{
     const data = req.body;
     const deleteProduct = await getDataOfSpecificMachine(req.body.machineId).findByIdAndDelete(data["_id"], (error)=>{
         if(error) throw error;
-        return res.status(200).send("Product deleted successfully.");
+        return res.status(200).send("Product deleted successfully..");
     });
 });
 
 app.post('/updateProduct', async(req, res)=>{
     const data = req.body;
+    console.log(data)
     try{
         if(data["price"] == null){
             return res.status(403).send("something went wrong");
@@ -40,7 +41,7 @@ app.post('/updateProduct', async(req, res)=>{
             const filter = {_id: data["_id"]};
             const change = {price: data["price"], quantity:data["quantity"]}; // here we add logic for adding image
             const update = await getDataOfSpecificMachine(req.body.machineId).findOneAndUpdate(filter, change);
-            return res.status(200).send("Done");
+            return res.status(200).send({success:"yes"});
         };
     }catch(error){
         return res.status(400).send(error);
