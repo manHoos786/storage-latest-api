@@ -28,23 +28,11 @@ app.post('/deleteProduct', async(req, res)=>{
 app.post('/updateProduct', async(req, res)=>{
     try{
         const data = req.body;
-        // const price1 = Number(req.body.price);
-        // const quantity1 = Number(req.body.quantity);
-        // const id = (req.body._id);
-
-    
-    //     if(price1 == null){
-    //         return res.status(403).send("price is wrong");
-    //     }else if(quantity1 == null){
-    //         return res.status(404).send("quantity wrong");
-    // }else
-        {
-            const filter = {_id: data["_id"]};
-            const change = {price: data["price"], quantity:data["quantity"]}; // here we add logic for adding image
-            const update = await getDataOfSpecificMachine(req.body.machineId).findOneAndUpdate(filter, change);
-            console.log(update)
-            return res.status(200).send("Successfully");
-        };
+        const filter = {_id: data["_id"]};
+        const change = {price: data["price"], quantity:data["quantity"]}; // here we add logic for adding image
+        const update = await getDataOfSpecificMachine(data["machineId"]).findOneAndUpdate(filter, change);
+        console.log(update)
+        return res.status(200).send("Successfully");
     }catch(error){
         return res.status(400).send(error);
     };
