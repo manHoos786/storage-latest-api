@@ -28,11 +28,9 @@ app.post('/updateProduct', async(req, res)=>{
             return res.status(403).send("Something went wrong");
         }else if(data["machineId"] == null){
             return res.status(403).send("Something went wrong");
-        }else if(data["status"] == null){
-            return res.status(403).send("Something went wrong");
         }else{
             const filter = {_id: data["_id"]};
-            const change = {price: data["price"], quantity:data["quantity"], status:data["status"]}; // here we add logic for adding image
+            const change = {price: data["price"], quantity:data["quantity"]}; // here we add logic for adding image
             const update = await getDataOfSpecificMachine(req.body.machineId).findOneAndUpdate(filter, change);
             return res.status(200).send("Done");
         };
