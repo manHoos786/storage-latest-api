@@ -26,17 +26,18 @@ app.post('/deleteProduct', async(req, res)=>{
 });
 
 app.post('/updateProduct', async(req, res)=>{
-    const data = req.body;
-    const price1 = Number(data["price"])
-    const quantity1 = Number(data["quantity"])
     try{
+        const data = req.body;
+        const price1 = Number(data.price);
+        const quantity1 = Number(data.quantity);
+
         if(price1 == null){
             return res.status(403).send("price is wrong");
         }else if(quantity1 == null){
             return res.status(404).send("quantity wrong");
-        }else if(data["_id"] == null){
+        }else if(data._id == null){
             return res.status(405).send("id is wrong");
-        }else if(data["machineId"] == null){
+        }else if(data.machineId == null){
             return res.status(406).send("machine id is wrong");
         }else{
             const filter = {_id: data["_id"]};
