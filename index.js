@@ -18,11 +18,14 @@ const schema = new mongoose.Schema({
 });
 
 app.post('/deleteProduct', async(req, res)=>{
-    const data = req.body;
-    const deleteProduct = await getDataOfSpecificMachine(req.body.machineId).findByIdAndDelete(data["_id"], (error)=>{
-        if(error) throw error;
-        return res.status(200).send("Product deleted successfully..");
-    });
+    try{
+        const data = req.body;
+        const deleteProduct = await getDataOfSpecificMachine(req.body.machineId).findByIdAndDelete(data["_id"])
+        return res.status(200).send({"Deleted":"Successfully"});
+    }catch(error){
+        return res.status(404).send("Something went wrong");
+    };
+    
 });
 
 app.post('/updateProduct', async(req, res)=>{
