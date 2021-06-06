@@ -31,8 +31,7 @@ app.post('/updateProduct', async(req, res)=>{
         const filter = {_id: data["_id"]};
         const change = {price: data["price"], quantity:data["quantity"]}; // here we add logic for adding image
         const update = await getDataOfSpecificMachine(data["machineId"]).findOneAndUpdate(filter, change);
-        console.log(update)
-        return res.status(200).send(update);
+        return res.status(200).send({"updated":"yes"});
     }catch(error){
         return res.status(400).send(error);
     };
