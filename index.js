@@ -32,7 +32,7 @@ app.post('/updateProduct', async(req, res)=>{
         const change = {price: data["price"], quantity:data["quantity"]}; // here we add logic for adding image
         const update = await getDataOfSpecificMachine(data["machineId"]).findOneAndUpdate(filter, change);
         console.log(update)
-        return res.status(200).send({"Successful":"yes"});
+        return res.status(200).send(update);
     }catch(error){
         return res.status(400).send(error);
     };
@@ -50,7 +50,6 @@ app.post('/update/:mId', async(req, res)=>{
 
 app.post('/final_recipt', async(req, res) =>{
 	try{
-
 		const recipt = new getDataOfSpecificMachine("final_recipt")({
 			quantity : req.body.quantity,
 			product_id:req.body.product_id,
