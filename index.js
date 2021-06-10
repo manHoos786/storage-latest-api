@@ -40,10 +40,8 @@ app.get("/file/:filename", async (req, res) => {
         const file = await gfs.files.findOne({ filename: req.params.filename });
         const readStream = gfs.createReadStream(file.filename);
         readStream.pipe(res);
-        console.log(readStream.pipe(res));
-
     } catch (error) {
-        res.send("not found");
+        res.send(error);
     }
 });
 
