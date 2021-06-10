@@ -27,22 +27,12 @@ const schema = new mongoose.Schema({
     image:String
 });
 
-
-
 const conn = mongoose.connection;
+
 conn.once("open", function(){
     gfs = Grid(conn.db, mongoose.mongo);
     gfs.collection("photos");
 });
-
-// app.use("/file", upload);
-
-// app.post("/upload", upload.single("file"), async (req, res) => {
-//     if (req.file === undefined) return res.send("you must select a file.");
-//     // const imgUrl = `https://afternoon-shore-39724.herokuapp.com/file/${req.file.filename}`;
-//     const imgUrl = `http://localhost:5000/file/${req.file.filename}`;
-//     return res.send(imgUrl);
-// });
 
 app.get("/file/:filename", async (req, res) => {
     try {
@@ -77,15 +67,25 @@ app.post('/deleteProduct', async(req, res)=>{
     
 });
 
-app.post('/updateProduct',upload.single("image"),  async(req, res)=>{
+app.post('/updateImage',upload.single("image"),  async(req, res)=>{
     try{
         if (req.file === undefined) return res.send("you must select a file.");
-    // const imgUrl = `https://afternoon-shore-39724.herokuapp.com/file/${req.file.filename}`;
         const imgUrl = `https://obscure-cove-38079.herokuapp.com/file/${req.file.filename}`;
         const data = req.body;
         const filter = {_id: data["_id"]};
-        const change = {price: data["price"], quantity:data["quantity"], image:imgUrl}; // here we add logic for adding image
-    
+        const change = {image:imgUrl}; // here we add logic for adding image
+        const update = await getDataOfSpecificMachine(data["machineId"]).findOneAndUpdate(filter, change);
+        return res.status(200).send({"updated":"yes"});
+    }catch(error){
+        return res.status(400).send(error);
+    };
+});
+
+app.post('/updateProduct', async(req, res)=>{
+    try{
+        const data = req.body;
+        const filter = {_id: data["_id"]};
+        const change = {price: data["price"], quantity:data["quantity"]}; // here we add logic for adding image
         const update = await getDataOfSpecificMachine(data["machineId"]).findOneAndUpdate(filter, change);
         return res.status(200).send({"updated":"yes"});
     }catch(error){
@@ -165,7 +165,6 @@ app.get('/showProduct/:mId', async(req, res) =>{
         return res.status(404).send("Something went wrong.Please try again later.");
     }
 })
-
 
 function getDataOfSpecificMachine(machineId){
     const model = new mongoose.model(`${machineId}`, schema);
