@@ -1,4 +1,17 @@
 const mongoose = require('mongoose')
-mongoose.connect("mongodb+srv://user:user@cluster0.h5qwd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology:true, useFindAndModify:false})
-.then(()=>console.log("Database connected successfully."))
-.catch((err)=>console.log(err))
+
+module.exports = async function connection(){
+    try{
+        const connectionParams = {
+            useNewUrlParser:true,
+            useCreateIndex:true,
+            useUnifiedTopology:true,
+            useFindAndModify:false
+        };
+        await mongoose.connect(process.env.DB, connectionParams);
+        console.log("connected to database");
+    }catch(error){
+        console.log(error);
+        console.log("could not connect to database")
+    }
+};

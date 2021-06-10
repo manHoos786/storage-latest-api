@@ -1,10 +1,19 @@
+require("dotenv").config();
+// const upload = require('./routes/upload');
+const Grid = require('gridfs-stream');
+const connection = require('./connection');
+// const { connect } = require("./routes/upload");
 const express = require('express');
 const { isEmpty } = require('lodash');
 const mongoose = require('mongoose');
-require('./connection');
+const multer = require('multer');
+const upload = require("./middleware/upload");
 const app = express();
 const port = process.env.PORT || 5000;
 app.use(express.json());
+
+connection();
+let gfs;
 
 
 const schema = new mongoose.Schema({
@@ -15,6 +24,46 @@ const schema = new mongoose.Schema({
     price:Number,
     status:Boolean,
 	product_id : Number, 
+    image:String
+});
+
+
+
+const conn = mongoose.connection;
+conn.once("open", function(){
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection("photos");
+});
+
+// app.use("/file", upload);
+
+// app.post("/upload", upload.single("file"), async (req, res) => {
+//     if (req.file === undefined) return res.send("you must select a file.");
+//     // const imgUrl = `https://afternoon-shore-39724.herokuapp.com/file/${req.file.filename}`;
+//     const imgUrl = `http://localhost:5000/file/${req.file.filename}`;
+//     return res.send(imgUrl);
+// });
+
+app.get("/file/:filename", async (req, res) => {
+    try {
+        const file = await gfs.files.findOne({ filename: req.params.filename });
+        const readStream = gfs.createReadStream(file.filename);
+        readStream.pipe(res);
+        console.log(readStream.pipe(res));
+
+    } catch (error) {
+        res.send("not found");
+    }
+});
+
+app.delete("/file/:filename", async (req, res) => {
+    try {
+        await gfs.files.deleteOne({ filename: req.params.filename });
+        res.send("success");
+    } catch (error) {
+        console.log(error);
+        res.send("An error occured.");
+    }
 });
 
 app.post('/deleteProduct', async(req, res)=>{
@@ -28,11 +77,15 @@ app.post('/deleteProduct', async(req, res)=>{
     
 });
 
-app.post('/updateProduct', async(req, res)=>{
+app.post('/updateProduct',upload.single("image"),  async(req, res)=>{
     try{
+        if (req.file === undefined) return res.send("you must select a file.");
+    // const imgUrl = `https://afternoon-shore-39724.herokuapp.com/file/${req.file.filename}`;
+        const imgUrl = `https://obscure-cove-38079.herokuapp.com/file/${req.file.filename}`;
         const data = req.body;
         const filter = {_id: data["_id"]};
-        const change = {price: data["price"], quantity:data["quantity"]}; // here we add logic for adding image
+        const change = {price: data["price"], quantity:data["quantity"], image:imgUrl}; // here we add logic for adding image
+    
         const update = await getDataOfSpecificMachine(data["machineId"]).findOneAndUpdate(filter, change);
         return res.status(200).send({"updated":"yes"});
     }catch(error){
