@@ -61,12 +61,12 @@ app.post('/updateImage',upload.single("image"),  async(req, res)=>{
         if (req.file === undefined) return res.send("you must select a file.");
         
         const imgUrl = `https://obscure-cove-38079.herokuapp.com/file/${req.file.filename}`;
-        // const data = req.body;
-        // const filter = {_id: data["_id"]};
+        const data = req.body;
+        const filter = {_id: data["_id"]};
 
-        const filter = {_id: "60b5036e25a51e59229d4fea"};
+        // const filter = {_id: "60b5036e25a51e59229d4fea"};
         const change = {image:imgUrl}; // here we add logic for adding image
-        const update = await getDataOfSpecificMachine("machine3").findOneAndUpdate(filter, change);
+        const update = await getDataOfSpecificMachine(data["machineId"]).findOneAndUpdate(filter, change);
         return res.status(200).send({"updated":"yes"});
     }catch(error){
         return res.status(400).send(error);
