@@ -32,7 +32,7 @@ const conn = mongoose.connection;
 
 conn.once("open", function(){
     gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection("photos");
+    gfs.collection("fs");
 });
 
 app.get("/file/:filename", async (req, res) => {
@@ -40,8 +40,8 @@ app.get("/file/:filename", async (req, res) => {
         const file = await gfs.files.findOne({ filename: req.params.filename });
         const readStream = gfs.createReadStream(file.filename);
         readStream.pipe(res);
-    } catch (error) {
-        res.send(error);
+    } catch (error){
+        res.send(error)
     }
 });
 
