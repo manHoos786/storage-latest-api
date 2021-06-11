@@ -58,40 +58,40 @@ app.post('/deleteProduct', async(req, res)=>{
     
 });
 
-app.post('/addNewProduct',upload.single("image"), async(req, res) => {
-    try{
-        // here we add new product.
-        // here we check the machine is registered or not. if not registered then we will not proceed.
-        if (req.file === undefined) return res.send("you must select a file.");
+// app.post('/addNewProduct',upload.single("image"), async(req, res) => {
+//     try{
+//         // here we add new product.
+//         // here we check the machine is registered or not. if not registered then we will not proceed.
+//         if (req.file === undefined) return res.send("you must select a file.");
         
-        const imgUrl = `https://obscure-cove-38079.herokuapp.com/file/${req.file.filename}`;
+//         const imgUrl = `https://obscure-cove-38079.herokuapp.com/file/${req.file.filename}`;
         
-        const machineId = req.body.machine;
-        const validate = await getDataOfSpecificMachine(machineId).find();
-        const isNotValid = Object.keys(validate).length === 0;
-        if(isNotValid){
-            return res.status(400).send("This machine is not valid. Please contact to our team for validation");
-        }
-        else{
-            const fillProduct = new getDataOfSpecificMachine(machineId)({
+//         const machineId = req.body.machine;
+//         const validate = await getDataOfSpecificMachine(machineId).find();
+//         const isNotValid = Object.keys(validate).length === 0;
+//         if(isNotValid){
+//             return res.status(400).send("This machine is not valid. Please contact to our team for validation");
+//         }
+//         else{
+//             const fillProduct = new getDataOfSpecificMachine(machineId)({
                 
-                machine:machineId,
-                key_razorpay:req.body.key_razorpay,
-                product_id:Date.now(),
-                image:imgUrl, 
-                quantity:req.body.quantity,
-                price:req.body.price,
-                status:true,
+//                 machine:machineId,
+//                 key_razorpay:req.body.key_razorpay,
+//                 product_id:Date.now(),
+//                 image:imgUrl, 
+//                 quantity:req.body.quantity,
+//                 price:req.body.price,
+//                 status:true,
 
-            })
-            const fill = await fillProduct.save();
-            return res.status(201).send(fill);
-        };        
+//             })
+//             const fill = await fillProduct.save();
+//             return res.status(201).send(fill);
+//         };        
 
-    }catch(e){
-        return res.status(404).send("Something went wrong...");
-    };
-});
+//     }catch(e){
+//         return res.status(404).send("Something went wrong...");
+//     };
+// });
 
 app.post('/updateImage',upload.single("image"),  async(req, res)=>{
     try{
