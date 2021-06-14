@@ -152,7 +152,7 @@ app.post('/final_recipt', async(req, res) =>{
 app.post('/updateQuantity', async(req, res)=>{
     try{
         // machine, _id, quantity
-        const updateQuantity = await getDataOfSpecificMachine(req.body.machine).findByIdAndUpdate({_id:req.body._id}, {quantity:req.body.quantity}, (error)=>{
+        const updateQuantity = await getDataOfSpecificMachine(req.body.machine).findByIdAndUpdate({_id:new ObjectId(req.body._id)}, {quantity:req.body.quantity}, (error)=>{
             if(error) throw error;
             return res.status(200).send("updated successfully.")
         });
