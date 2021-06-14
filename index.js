@@ -122,12 +122,11 @@ app.post('/updateProduct', async(req, res)=>{
     };
 });
 
-app.post('/update/:mId', async(req, res)=>{
+app.post('/update', async(req, res)=>{
     const left = req.body;
-    const check =await getDataOfSpecificMachine(req.params.mId).find();
     const filter = {_id : left["_id"]};
     const change = {quantity:left["quantity"], status:left["status"]};
-    const update = await getDataOfSpecificMachine(req.params.mId).findOneAndUpdate(filter, change);
+    const update = await getDataOfSpecificMachine(req.body.mId).findOneAndUpdate(filter, change);
     return res.status(200).send(update);
 
 });
@@ -149,6 +148,31 @@ app.post('/final_recipt', async(req, res) =>{
 	};
 });
 
+
+app.post('/updateQuantity', async(req, res)=>{
+    try{
+        // machine, _id, quantity
+        const updateQuantity = await getDataOfSpecificMachine(req.body.machine).findByIdAndUpdate({_id:req.body._id}, {quantity:req.body.quantity}, (error)=>{
+            if(error) throw error;
+            return res.status(200).send("updated successfully.")
+        });
+    }catch(e){
+        return res.status(400).send("updating qunatity failed try again.");
+    };
+});
+
+
+app.get('/getQuantity', async(req, res)=>{
+    try{
+        // machine, _id, 
+        const updateQuantity = await getDataOfSpecificMachine(req.body.machine).findById({_id:req.body._id}, (error)=>{
+            if(error) throw error;
+        });
+        return res.status(200).send(updateQuantity)
+    }catch(e){
+        return res.status(400).send("updating qunatity failed try again.");
+    };
+});
 
 
 // When we scan then This get method shows all the product discription in app.
