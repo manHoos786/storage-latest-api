@@ -168,7 +168,7 @@ app.get('/getQuantity', async(req, res)=>{
         const updateQuantity = await getDataOfSpecificMachine(req.body.machine).findById({_id:req.body._id}, (error)=>{
             if(error) throw error;
         });
-        return res.status(200).send(updateQuantity)
+        return res.status(200).send(updateQuantity);
     }catch(e){
         return res.status(400).send("updating qunatity failed try again.");
     };
