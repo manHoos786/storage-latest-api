@@ -190,8 +190,8 @@ app.get('/showProduct/:mId', async(req, res) =>{
             if(error){
                 res.send("error here");
             }else{
-                console.log(showAllProduct);
-                res.send(showAllProduct);
+                console.log(data);
+                res.send(data);
             }
         });
         // const isNotWorking = Object.keys(showAllProduct).length === 0;
