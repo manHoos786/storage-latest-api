@@ -185,6 +185,7 @@ app.get('/showProduct/:mId', async(req, res) =>{
     try{
         const machineId = req.params.mId;
         const showAllProduct = await getDataOfSpecificMachine(machineId).find();
+        console.log(showAllProduct);
         const isNotWorking = Object.keys(showAllProduct).length === 0;
         if(isNotWorking){
             return res.status(404).send("Sorry this machine is not working.");
