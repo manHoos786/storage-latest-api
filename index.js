@@ -194,14 +194,14 @@ app.get('/showProduct/:mId', async(req, res) =>{
                 res.send(showAllProduct);
             }
         });
-        const isNotWorking = Object.keys(showAllProduct).length === 0;
-        if(isNotWorking){
-            return res.status(404).send("Sorry this machine is not working.");
-        }
-        else{
-            // here we send all data
-            return res.status(200).send(showAllProduct);
-        }
+        // const isNotWorking = Object.keys(showAllProduct).length === 0;
+        // if(isNotWorking){
+        //     return res.status(404).send("Sorry this machine is not working.");
+        // }
+        // else{
+        //     // here we send all data
+        //     return res.status(200).send(showAllProduct);
+        // }
     }catch(e){
         return res.status(404).send("Something went wrong.Please try again later.");
     }
