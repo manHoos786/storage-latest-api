@@ -18,16 +18,20 @@ let gfs;
 
 
 const schema = new mongoose.Schema({
-    image:String, 
-    quantity:Number,
-    t_id: String,
-    account_id:String,
-    price:Number,
-    status:Boolean,
-	product_id : Number, 
-    image:String,
+    // image:String, 
+    // quantity:Number,
+    // t_id: String,
+    // account_id:String,
+    // price:Number,
+    // status:Boolean,
+	// product_id : Number, 
+    // image:String,
+    // machine:String,
+    // key_razorpay:String
     machine:String,
-    key_razorpay:String
+    price:Number,
+    status:Boolean
+
 });
 
 const conn = mongoose.connection;
@@ -181,7 +185,7 @@ app.get('/getQuantity', async(req, res)=>{
 app.get('/showProduct/:mId', async(req, res) =>{
     try{
         const machineId = req.params.mId;
-        const showAllProduct = await getDataOfSpecificMachine(machineId).find().limit(2);
+        const showAllProduct = await getDataOfSpecificMachine(machineId).find();
         const isNotWorking = Object.keys(showAllProduct).length === 0;
         if(isNotWorking){
             return res.status(404).send("Sorry this machine is not working.");
