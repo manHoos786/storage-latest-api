@@ -186,13 +186,11 @@ app.get('/getQuantity', async(req, res)=>{
 app.get('/showProduct/:mId', async(req, res) =>{
     try{
         const machineId = req.params.mId;
-        const showAllProduct = await getDataOfSpecificMachine(machineId).find({}, (error, data)=>{
-            if(error){
-                res.send("error here");
-            }else{
+        const showAllProduct =  getDataOfSpecificMachine(machineId);
+        showAllProduct.find({}).then((data)=>{
+            
                 console.log(data);
                 res.send(data);
-            }
         });
         // const isNotWorking = Object.keys(showAllProduct).length === 0;
         // if(isNotWorking){
