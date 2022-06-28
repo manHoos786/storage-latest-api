@@ -176,6 +176,9 @@ app.get('/getQuantity', async(req, res)=>{
     };
 });
 
+app.get('hey', async(req, res)=>{
+    return res.send("Hey aakash, you are alive");
+})
 
 // When we scan then This get method shows all the product discription in app.
 app.get('/showProduct/:mId', async(req, res) =>{
