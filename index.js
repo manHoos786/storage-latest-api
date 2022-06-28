@@ -176,7 +176,7 @@ app.get('/getQuantity', async(req, res)=>{
     };
 });
 
-app.get('hey', async(req, res)=>{
+app.get('/hey', async(req, res)=>{
     return res.send("Hey aakash, you are alive");
 })
 
