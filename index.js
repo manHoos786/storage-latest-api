@@ -12,6 +12,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 app.use(express.json());
 const base64 = require('node-base64-image');
+const { reset } = require("nodemon");
 
 connection();
 let gfs;
@@ -185,7 +186,14 @@ app.get('/getQuantity', async(req, res)=>{
 app.get('/showProduct/:mId', async(req, res) =>{
     try{
         const machineId = req.params.mId;
-        const showAllProduct = await getDataOfSpecificMachine(machineId).find();
+        const showAllProduct = await getDataOfSpecificMachine(machineId).find({}, (error, data)=>{
+            if(error){
+                res.send("error here");
+            }else{
+                console.log(showAllProduct);
+                res.send(showAllProduct);
+            }
+        });
         const isNotWorking = Object.keys(showAllProduct).length === 0;
         if(isNotWorking){
             return res.status(404).send("Sorry this machine is not working.");
