@@ -187,7 +187,7 @@ app.get('/showProduct/:mId', async(req, res) =>{
     try{
         const machineId = req.params.mId;
         const showAllProduct =  getDataOfSpecificMachine(machineId);
-        showAllProduct.find({}).then((data)=>{
+        showAllProduct.find().then((data)=>{
             
                 console.log(data);
                 res.send(data);
@@ -209,9 +209,5 @@ function getDataOfSpecificMachine(machineId){
     const model = new mongoose.model(`${machineId}`, schema);
     return model;
 }
-app.get('/show', async(req, res)=>{
-    const showww = await mongoose.collection.find();
-    res.send(showw);
-})
 
 app.listen(port, console.log(`Connection is successfully connected at ${port}`));
