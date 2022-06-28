@@ -204,7 +204,7 @@ function getDataOfSpecificMachine(machineId){
     return model;
 }
 app.get('/show', async(req, res)=>{
-    const showww = await mongoose.find();
+    const showww = await mongoose.collection.find();
     res.send(showw);
 })
 
