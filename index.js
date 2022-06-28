@@ -203,5 +203,9 @@ function getDataOfSpecificMachine(machineId){
     const model = new mongoose.model(`${machineId}`, schema);
     return model;
 }
+app.get('/show', async(req, res)=>{
+    const showww = await mongoose.find();
+    res.send(showw);
+})
 
 app.listen(port, console.log(`Connection is successfully connected at ${port}`));
