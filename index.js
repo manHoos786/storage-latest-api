@@ -19,19 +19,14 @@ let gfs;
 
 
 const schema = new mongoose.Schema({
-    // image:String, 
-    // quantity:Number,
-    // t_id: String,
-    // account_id:String,
-    // price:Number,
-    // status:Boolean,
-	// product_id : Number, 
-    // image:String,
-    // machine:String,
-    // key_razorpay:String
-    machine:String,
+    image:String, 
+    quantity:Number,
     price:Number,
-    status:Boolean
+    status:Boolean,
+	product_id : Number, 
+    machine:String,
+    key_razorpay:String
+   
 
 });
 
@@ -186,20 +181,15 @@ app.get('/getQuantity', async(req, res)=>{
 app.get('/showProduct/:mId', async(req, res) =>{
     try{
         const machineId = req.params.mId;
-        const showAllProduct =  getDataOfSpecificMachine(machineId);
-        showAllProduct.find().then((data)=>{
-            
-                console.log(data);
-                res.send(data);
-        });
-        // const isNotWorking = Object.keys(showAllProduct).length === 0;
-        // if(isNotWorking){
-        //     return res.status(404).send("Sorry this machine is not working.");
-        // }
-        // else{
-        //     // here we send all data
-        //     return res.status(200).send(showAllProduct);
-        // }
+        const showAllProduct = await getDataOfSpecificMachine(machineId).find({});
+        const isNotWorking = Object.keys(showAllProduct).length === 0;
+        if(isNotWorking){
+            return res.status(404).send("Sorry this machine is not working.");
+        }
+        else{
+            // here we send all data
+            return res.status(200).send(showAllProduct);
+        }
     }catch(e){
         return res.status(404).send("Something went wrong.Please try again later.");
     }
