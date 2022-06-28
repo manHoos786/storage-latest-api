@@ -183,7 +183,7 @@ app.get('/showProduct/:mId', async(req, res) =>{
         const showAllProduct = await getDataOfSpecificMachine(machineId).find();
         const isNotWorking = Object.keys(showAllProduct).length === 0;
         if(isNotWorking){
-            return res.status(404).send("Sorry this machine is not working. "+showAllProduct);
+            return res.status(404).send(showAllProduct);
         }
         else{
             // here we send all data
